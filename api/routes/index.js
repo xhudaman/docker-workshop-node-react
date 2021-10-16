@@ -97,9 +97,8 @@ router.put("/tasks/:id", ({ params, body }, response) => {
 router.delete("/tasks/:id", ({ params }, response) => {
   try {
     const sql = "DELETE FROM tasks WHERE id = ?";
-    const params = [params.id];
 
-    database.run(sql, params, function(error, task) {
+    database.run(sql, [params.id], function(error, task) {
       if (error) {
         response.status(error.status || 500).json({ error });
         return;
