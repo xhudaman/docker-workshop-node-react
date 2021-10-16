@@ -13,7 +13,7 @@ router.get("/tasks", function(req, res, next) {
         {
           id: 2,
           name: "Dockerize a Node/Express app",
-          completed: true
+          completed: false
         }
       ]
     });
