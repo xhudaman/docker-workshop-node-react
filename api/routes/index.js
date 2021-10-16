@@ -45,14 +45,24 @@ router.post("/tasks", ({ body }, response) => {
     const sql = "INSERT INTO tasks (name, completed) VALUES (?,?)";
     const params = [body.task.name, body.task.completed];
 
-    database.run(sql, params, function(error, task) {
+    database.run(sql, params, error => {
       if (error) {
         response.status(error.status || 500).json({ error });
         return;
       }
-      response.json({
-        task
-      });
+
+      database.get(
+        "SELECT * FROM tasks ORDER BY id DESC LIMIT 1",
+        (error, task) => {
+          if (error) {
+            response.status(error.status || 500).json({ error });
+            return;
+          }
+          response.json({
+            task
+          });
+        }
+      );
     });
   } catch (error) {
     console.error(error);

@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
 import Table from "react-bootstrap/Table";
 import Badge from "react-bootstrap/Badge";
+import { Link } from "react-router-dom";
 
 const { REACT_APP_API_URL } = process.env;
 
@@ -52,9 +53,16 @@ const TaskList = () => {
             </tr>
           ) : tasks ? (
             tasks.map(({ id, name, completed }) => (
-              <tr key={id}>
+              <tr key={id} onClick={() => {}}>
                 <td className="col-4">{id}</td>
-                <td className="col-4">{name}</td>
+                <td className="col-4">
+                  <Link
+                    to={`/task/${id}`}
+                    className="btn btn-outline-secondary w-100"
+                  >
+                    {name}
+                  </Link>
+                </td>
                 <td className="col-4">
                   {completed ? (
                     <Badge bg="success">True</Badge>

@@ -9,6 +9,8 @@ import {
   Redirect
 } from "react-router-dom";
 import TaskList from "./components/task/index";
+import TaskForm from "./components/task/taskForm";
+import AddButton from "./components/addButton";
 
 function App() {
   return (
@@ -17,15 +19,16 @@ function App() {
         <Navbar bg="secondary" variant="dark">
           <Container>
             <Navbar.Brand href="/">Todo App - Dockerize Me</Navbar.Brand>
+            <AddButton />
           </Container>
         </Navbar>
         <Switch>
           <Route exact path="/">
             <Redirect to="/task" />
           </Route>
-          <Route path="/task" component={TaskList} />
+          <Route exact path="/task" component={TaskList} />
           <Route path="/task/:id">
-            <div />
+            <TaskForm />
           </Route>
         </Switch>
       </Router>
