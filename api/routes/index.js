@@ -1,23 +1,25 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const DatabaseClient = require("../database/database");
 
-router.get("/tasks", function(req, res, next) {
-  setTimeout(() => {
-    res.status(200).send({
-      tasks: [
-        {
-          id: 1,
-          name: "Dockerize a React app",
-          completed: true
-        },
-        {
-          id: 2,
-          name: "Dockerize a Node/Express app",
-          completed: false
-        }
-      ]
+router.get("/tasks", async function(req, res, next) {
+  try {
+    const dbClient = DatabaseClient.dbClient();
+    const db = dbClient.db;
+
+    db.all(`SELECT * FROM tasks`, [], (error, tasks) => {
+      if (error) {
+        console.error(error);
+      } else {
+        res.status(200).send({
+          tasks: dbClient.serializeTasks(tasks)
+        });
+      }
     });
-  }, 3500);
+    db.close();
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;
