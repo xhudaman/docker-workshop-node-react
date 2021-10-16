@@ -7,10 +7,15 @@ const database = new sqlite3.Database("./tasks.sqlite3", err => {
   console.log("Connected to the database successfully.");
 });
 
-const serializeTasks = tasks => {
-  return tasks.map(task => ({
-    ...task,
-    completed: task.completed ? true : false
-  }));
+const serializeData = data => {
+  if (data.length) {
+    return data.map(task => ({
+      ...task,
+      completed: task.completed ? true : false
+    }));
+  }
+
+  return { ...data, completed: data.completed ? true : false };
 };
-module.exports = { database, serializeTasks };
+
+module.exports = { database, serializeData };
