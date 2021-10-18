@@ -4,7 +4,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-const AddButton = ({}) => {
+const AddButton = () => {
   const history = useHistory();
   const task = {
     name: "",
