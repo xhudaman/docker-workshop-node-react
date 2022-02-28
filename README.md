@@ -30,47 +30,54 @@ As far as guidelines, here is a list of requirements for the Dockerfiles' build:
 
 The expectation is that both apps will run on their default ports (`3000`) within their respective containers but the front-end has its host port modified when running.
 
-### Solution
 
-The bare minimum contents of the `Dockerfile`s are as follows:
-```dockerfile
-FROM node:14
 
-ENV NODE_ENV development
+<details>
+  <summary><strong>Solution</strong></summary>
+  
+  The bare minimum contents of the `Dockerfile`s are as follows:
 
-WORKDIR /src
+  ```dockerfile
+  FROM node:14
 
-COPY . .
+  ENV NODE_ENV development
 
-RUN yarn install --frozen-lockfile --non-interactive
+  WORKDIR /src
 
-EXPOSE 3000
+  COPY . .
 
-CMD ["yarn", "start"]
-```
+  RUN yarn install --frozen-lockfile --non-interactive
 
-There should be a Dockerfile with this content in both the api and web directories.
+  EXPOSE 3000
 
-Once they are created we need to build the images which can be achieved by the following:
+  CMD ["yarn", "start"]
+  ```
 
-> The following steps assume you are starting with a terminal in the root directory of the project
+  There should be a Dockerfile with this content in both the api and web directories.
 
-1. Navigate to the `api` directory and run the `docker build` command
-```bash
-  cd api
+  Once they are created we need to build the images which can be achieved by the following:
 
-  docker build -t todo-api .
-```
+  > The following steps assume you are starting with a terminal in the root directory of the project
 
-2. Navigate to the `web` directory and run the `docker build` command
-```bash
-  cd web
+  1. Navigate to the `api` directory and run the `docker build` command
+  ```bash
+    cd api
 
-  docker build -t todo-frontend .
-```
+    docker build -t todo-api .
+  ```
 
-Once both images are built we can now run the containers using the following commands in two terminal windows/tabs:
+  2. Navigate to the `web` directory and run the `docker build` command
+  ```bash
+    cd web
 
-* `docker run --rm -it -p 3000:3000 todo-api`
+    docker build -t todo-frontend .
+  ```
 
-* `docker run --rm -it -p 8080:3000 todo-frontend`
+  Once both images are built we can now run the containers using the following commands in two terminal windows/tabs:
+
+  * `docker run --rm -it -p 3000:3000 todo-api`
+
+  * `docker run --rm -it -p 8080:3000 todo-frontend`
+
+  
+</details>
